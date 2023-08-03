@@ -156,9 +156,11 @@ class DaMaiHelperService : AccessibilityService(), UserManager.IStartListener {
     }
 
     private fun startQ(event: AccessibilityEvent) {
-        event.source?.let { source ->
+        event.source?.let { source ->            
             val startBuy = source.getNodeById(dmNodeId(ID_LIVE_DETAIL_BUY))
-            startBuy?.text()?.let {
+            val startBuyText = startBuy?.text()?
+            logD("startQ with source: $startBuyText")
+            startBuyText.let {
                 if (!it.contains(jiJiangStr) && !it.contains(queHuoStr) &&
                     !it.contains(yuYueStr)) {
                     startBuy.click()
@@ -170,8 +172,9 @@ class DaMaiHelperService : AccessibilityService(), UserManager.IStartListener {
 
     private fun confirmOrder(event: AccessibilityEvent) {
         event.source?.let { source ->
-            sleep(100)
             val buyView = source.getNodeById(dmNodeId(ID_CONFIRM_BUY))
+            logD("confirmOrder with source: $(buyView.text())")
+            sleep(100)
             buyView?.click()
         }
     }
@@ -179,6 +182,7 @@ class DaMaiHelperService : AccessibilityService(), UserManager.IStartListener {
     private fun requestOrder(event: AccessibilityEvent) {
         event.source?.let { source ->
             val nodeByText = source.getNodeByText("提交订单", true)
+            logD("requestOrder with source: $(nodeByText.text())")
             nodeByText?.let {
                 it.click()
                 step = STEP_FINISH
