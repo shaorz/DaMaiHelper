@@ -77,10 +77,10 @@ const val SEGMENT_SIZE = 3072
 
 fun logD(content: String) {
     if (content.length < SEGMENT_SIZE) {
-        Log.d(TAG, content)
+        Log.i(TAG, content)
         return
     } else {
-        Log.d(TAG, content.substring(0, SEGMENT_SIZE))
+        Log.i(TAG, content.substring(0, SEGMENT_SIZE))
         logD(content.substring(SEGMENT_SIZE))
     }
 }
